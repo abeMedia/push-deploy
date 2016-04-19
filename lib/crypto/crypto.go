@@ -6,9 +6,9 @@ import (
     "crypto/rand"
     "encoding/base64"
     "errors"
-    "fmt"
+   // "fmt"
     "io"
-    "log"
+   // "log"
 )
 /*
 func main() {
