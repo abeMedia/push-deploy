@@ -2,6 +2,8 @@
 
 **Warning: This tool is still in early development and not ready for use yet!**
 
+[![Build Status](https://travis-ci.org/abeMedia/push-deploy.svg?branch=master)](https://travis-ci.org/abeMedia/push-deploy)
+
 Deploy jekyll websites using custom plugins to github pages without having to build them locally first.
 
 Push Deploy listen to webhookss from github & bitbucket to build your Jekyll site and deploy it to a git repo, s3 bucket or FTP server of your choice.
