@@ -16,6 +16,6 @@ func main() {
     http.Handle("/", http.FileServer(http.Dir(Config.DashboardPath)))
     
     host := fmt.Sprintf("%s:%d", Config.Host, Config.Port)
-    fmt.Println("Starting Jekyll Deploy on", host)
+    fmt.Println("Starting Push Deploy on", host)
     log.Fatal(http.ListenAndServe(host, nil))
 }
