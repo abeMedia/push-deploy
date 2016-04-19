@@ -1,0 +1,120 @@
+<div class="form-horizontal">
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" ng-model="item.name" class="form-control" id="name" placeholder="My Website or example.com" required />
+    </div>
+  </div>
+
+  <div class="page-header"><h2>Source</h2></div>
+  <div class="form-group">
+    <label for="title" class="col-sm-2 control-label">Repo</label>
+    <div class="col-sm-10">
+      <input type="text" ng-model="item.repo" class="form-control" id="repo" placeholder="http://github.com/foo/bar.git" required />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="branch" class="col-sm-2 control-label">Branch</label>
+    <div class="col-sm-10">
+      <input type="text" ng-model="item.branch" class="form-control" id="branch" placeholder="master" required/>
+    </div>
+  </div>
+  <div class="page-header">
+    <button type="button" class="btn btn-success pull-right" ng-click="addDeploy()">New Deployment</button>
+    <legend>Deployment</legend>
+  </div>
+  <div class="panel panel-default" ng-repeat="(i, deploy) in item.deploy">
+    <div class="panel-heading">
+      <button type="button" class="btn btn-danger pull-right btn-xs" ng-click="removeDeploy(i)">Remove</button>
+      <h4 class="panel-title">Deployment {{i+1}}</h4>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="deploy_type_{{i}}" class="col-sm-2 control-label">Type</label>
+        <div class="col-sm-10">
+          <select id="deploy_type_{{i}}" ng-model="item.deploy[i].type" class="form-control" required>
+            <option value="">Please select a deployment method </option>
+            <option value="git">Git Repository</option>
+            <option value="s3">Amazon S3</option>
+            <option value="ftp">FTP</option>
+            <option value="local">Local</option>
+          </select>
+        </div>
+      </div>
+      <div ng-if="item.deploy[i].type == 'git'">
+        <div class="form-group">
+          <label for="deploy_repo_{{i}}" class="col-sm-2 control-label">Repo</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].repo" class="form-control" id="deploy_repo_{{i}}" placeholder="http://user:password@github.com/foo/bar.git" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="deploy_branch_{{i}}" class="col-sm-2 control-label">Branch</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].branch" class="form-control" id="deploy_branch_{{i}}" placeholder="master" required />
+          </div>
+        </div>
+      </div>
+      <div ng-if="item.deploy[i].type == 's3'">
+        <div class="form-group">
+          <label for="deploy_access_key_{{i}}" class="col-sm-2 control-label">Access Key</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].access_key" class="form-control" id="deploy_access_key_{{i}}" placeholder="" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="deploy_secret_key_{{i}}" class="col-sm-2 control-label">Secret Key</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].secret_key" class="form-control" id="deploy_secret_key_{{i}}" placeholder="" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="deploy_bucket_{{i}}" class="col-sm-2 control-label">Bucket</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].bucket" class="form-control" id="deploy_bucket_{{i}}" placeholder="bucket-name" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="deploy_path_{{i}}" class="col-sm-2 control-label">Remote Path</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].path" class="form-control" id="deploy_path_{{i}}" placeholder="/example/html" required />
+          </div>
+        </div>
+      </div>
+      <div ng-if="item.deploy[i].type == 'ftp'">
+        <div class="form-group">
+          <label for="deploy_host_{{i}}" class="col-sm-2 control-label">Host</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].host" class="form-control" id="deploy_host_{{i}}" placeholder="ftp.example.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="deploy_username_{{i}}" class="col-sm-2 control-label">Username</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].username" class="form-control" id="deploy_username_{{i}}" placeholder="User" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="deploy_password_{{i}}" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" ng-model="item.deploy[i].password" class="form-control" id="deploy_password_{{i}}" placeholder="&bull;&bull;&bull;&bull;&bull;" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="deploy_path_{{i}}" class="col-sm-2 control-label">Remote Path</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].path" class="form-control" id="deploy_path_{{i}}" placeholder="/var/www" required />
+          </div>
+        </div>
+      </div>
+      <div ng-if="item.deploy[i].type == 'local'">
+        <div class="form-group">
+          <label for="deploy_path_{{i}}" class="col-sm-2 control-label">Path</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="item.deploy[i].path" class="form-control" id="deploy_path_{{i}}" placeholder="/var/www" required />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

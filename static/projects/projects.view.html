@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-sm-6" ng-switch="item.status">
+    <h3 class="media-heading">Status: <span ng-class="status.class(item.status)"><span ng-class="status.icon(item.status)" class="fa-lg"></span> {{status.text(item.status)}}</span></h3>
+    <div class="well">
+      <button class="btn btn-primary btn-lg" ng-click="item.$build()" type="button"><span class="fa fa-rocket"></span> Build & Deploy</button>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <dl>
+      <dt>Webhook URL</dt>
+      <dd>{{webhook_url}}</dd>
+    </dl>
+    <dl>
+      <dt>Source (repo#branch)</dt>
+      <dd>{{item.repo}}#{{item.branch}}</dd>
+    </dl>
+  </div>
+</div>
+<h3>Deployment details</h3>
+<uib-accordion>
+  <uib-accordion-group close-others="oneAtATime" heading='Deployment {{i+1}} ({{deploy.type}})' ng-repeat="(i,deploy) in item.deploy" ng-switch="deploy.type">
+    <div ng-switch-when="git">
+      <dl>
+        <dt>Repository</dt>
+        <dd class="text-overflow">{{deploy.repo}}</dd>
+        <dt>Branch</dt>
+        <dd>{{deploy.branch}}</dd>
+      </dl>
+    </div>
+    <div ng-switch-when="ftp">
+      <dl>
+        <dt>Host</dt>
+        <dd class="text-overflow">{{deploy.host}}</dd>
+        <dt>Username</dt>
+        <dd>{{deploy.username}}</dd>
+        <dt>Password</dt>
+        <dd>{{deploy.password}}</dd>
+        <dt>Remote Path</dt>
+        <dd>{{deploy.path}}</dd>
+      </dl>
+    </div>
+    <div ng-switch-when="local">
+      <dl>
+        <dt>Path</dt>
+        <dd class="text-overflow">{{deploy.path}}</dd>
+      </dl>
+    </div>
+  </uib-accordion-group>
+</uib-accordion>

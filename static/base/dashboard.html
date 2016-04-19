@@ -1,0 +1,64 @@
+<form id="wrapper" role="form" name="form" ng-submit="actions.save()">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a id="logo" class="navbar-brand logo" ui-sref="projects"><div class="icon"></div></a>
+      <a class="navbar-brand" ui-sref="projects">Jekyll Deploy</a>
+    </div>
+    
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav side-nav">
+        <li ui-sref-active="active"><a ui-sref="projects"><i class="fa fa-cloud"></i> Projects</a></li>
+        <li ng-if="globals.user.admin" ui-sref-active="active"><a ui-sref="users"><i class="fa fa-users"></i> Users</a></li>
+      </ul>
+      
+      <ul class="nav navbar-nav visible-xs">
+        {% for item in menu.side %}
+        <li><a href="{{ base_url }}{{ item.url }}"><i class="fa fa-fw fa-{{ item.icon }}"></i> {{ item.title }}</a></li>
+        {% endfor %}
+        {% for item in menu.user %}
+        <li><a href="{{ base_url }}{{ item.url }}"><i class="fa fa-fw fa-{{ item.icon }}"></i> {{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li uib-dropdown>
+          <a href="#" uib-dropdown-toggle><i class="fa fa-user"></i> <span ng-bind="globals.user.name"></span> <b class="caret"></b></a>
+          <ul uib-dropdown-menu class="dropdown-menu">
+            <li><a ui-sref="users.profile"><i class="fa fa-fw fa-user"></i> Account</a></li>
+            <li><a ui-sref="logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id="page-header">
+    <div class="row">
+      <div class="col-sm-2">
+        <h1 ng-bind="page.title"></h1>
+      </div>
+      <div class="col-sm-5">
+        <div class="input-group" ng-if="page.search">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+          <input type="text" class="form-control" placeholder="Search {{ page.title }}" ng-model="$root.search">
+        </div>
+      </div>
+      <div class="col-sm-5 text-right">
+        <a ng-if="actions.new" ng-click="actions.new()" class="btn btn-success"><span class="fa fa-plus"></span> New {{page.title}}</a>
+        <a ng-if="actions.edit" ng-click="actions.edit()" class="btn btn-info"><span class="fa fa-edit"></span> Edit</a>
+        <a ng-if="actions.delete" ng-click="actions.delete(item)" class="btn btn-danger"><span class="fa fa-times"></span> Delete</a>
+        <button ng-if="actions.save" type="submit" ng-disabled="form.$invalid" class="btn btn-success"><span class="fa fa-edit"></span> Save</button>
+        <a ng-if="actions.cancel" ng-click="actions.cancel()" class="btn btn-danger"><span class="fa fa-times"></span> Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <div ng-include="base/alert.html"></div>
+  <div id="page-wrapper" ui-view></div>
+</form>
