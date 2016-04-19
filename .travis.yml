@@ -6,8 +6,8 @@ deploy:
   api_key:
     secure: GPrRNBFnX2nuBc11R9LaNBF1qQ22IsAxThZZRjINlfdFLgnT0zrCNqidCkOuAwxXDuOU5gC/awMi0Cln00IFccn/yU4g6G6PyRij2b1IqiLA78/2pg/E0sJqi16bZoMoA3jLkxebB3MBGz0YdfyMahK3BKJxGpedhxmuRDZ66EJRkckrDkmCKFTDCrK31nIyGTda5JegfwwCZGrQuoqsD54AHtg7FwTKEFfiSfh1T8y8Srq566ZbnYTj/QIdUGo0c6YIxDk2X1ok56QRRZW/4vM66sN0nlIT5BofZ+lu8hMJc0nt/c38/gvD8IAuI+2YodhztyHY0BWRoFve45nhEtAHOSdAxPQ+Vvs7XKCXgnhjCIvC1uAzB1GU+/DGAJsxPR/Wl1E9esCxCI+rpVH9tkeCknFp7Njki2OzUy9JJInIt2rWsiVkM0UrfJxvrpeOQl8JGN6afx00bYxpoDLb5VNauFrBcXMEvvRL108LxE09DsPOfEYcSiztYJdmIfKagi0i3wxXknSqRdAJzt8V2AIcDOpSlWHH1tfG3B8E8Bfb17cxvp9sSfaTcUn/NTzVclsKB8jSmOX9NpzVmFKYBs0fF5fVzB1UF/opq4F2ocO1pOcYiKXZ26fAoY6/WKRF7Fi4mvjP0PkVSZRKNEgLJ1ayJmcX4cC782gqUGfEv+A=
   file: 
-  - release/myproject-linux-amd64
-  - release/myproject-linux-386
-  - release/myproject-linux-arm
+  - release/push-deploy-linux-amd64
+  - release/push-deploy-linux-386
+  - release/push-deploy-linux-arm
   on:
     repo: abeMedia/push-deploy

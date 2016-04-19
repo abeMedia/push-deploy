@@ -1,4 +1,4 @@
-package = github.com/abemedia/push-deploy
+package = github.com/abeMedia/push-deploy
 
 .PHONY: release
 
