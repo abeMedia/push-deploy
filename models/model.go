@@ -3,6 +3,7 @@ package models
 import (
     t "github.com/abemedia/push-deploy/lib/db"
     "upper.io/db"
+    "fmt"
 )
 
 type Model struct {
@@ -37,6 +38,7 @@ func (m *Model) Add(d interface{}) (int64, error) {
 }
 
 func (m *Model) Update(q interface{}, d interface{}) error {
+    fmt.Println(d)
     return t.Table(m.table).Update(m.query(q), d)
 }
 

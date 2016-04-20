@@ -73,15 +73,18 @@ func Run(h map[string]string, p models.Project) {
     }
     
     // set status to live & add build info to database
-    build_info.Finish = time.Now()
-    build_info.Status = StatusOK
-    build_info.Logs = make(map[string]string)
+    logs := make(map[string]string)
     files, _ := ioutil.ReadDir(logdir)
     for _, f := range files {
         log, _ := ioutil.ReadFile(logdir + "/" + f.Name())
-        build_info.Logs[f.Name()] = string(log)
+        logs[f.Name()] = string(log)
     }
-    models.Builds.Update(id, build_info)
+    //.Builds.Update(id, build_info)
+    models.Builds.Update(id, map[string]interface{}{
+        "status": StatusError,
+        "finish": time.Now(),
+        "logs": logs,
+    })
     
     // cleanup
     os.RemoveAll(dir + "/compiled")
