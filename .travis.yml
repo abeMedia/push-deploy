@@ -1,6 +1,6 @@
 language: go
 go:
-- 1.5
+- 1.6
 script:
   - go install
 after_success:
@@ -15,5 +15,7 @@ deploy:
   - release/push-deploy-linux-amd64
   - release/push-deploy-linux-386
   - release/push-deploy-linux-arm
+  skip_cleanup: true
   on:
-    repo: abeMedia/push-deploy
+    branch: master
+    tags: true
