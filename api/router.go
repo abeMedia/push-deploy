@@ -28,6 +28,15 @@ func init() {
     router.HandleFunc("/projects/{id:[0-9]+}", auth(ProjectDelete)).Methods("DELETE")
     router.HandleFunc("/projects/{id:[0-9]+}/build", auth(ProjectBuild)).Methods("POST")
     
+    /*
+    // project builds
+    router.HandleFunc("/projects/{id:[0-9]+}/builds", auth(Builds)).Methods("GET")
+    router.HandleFunc("/projects/{id:[0-9]+}/builds/{id:[0-9]+}", auth(BuildView)).Methods("GET")
+    router.HandleFunc("/projects/{id:[0-9]+}/builds", auth(BuildNew)).Methods("POST")
+    router.HandleFunc("/projects/{id:[0-9]+}/builds/{id:[0-9]+}", auth(BuildDelete)).Methods("DELETE")
+    */
+    
+    // status websockets
     router.HandleFunc("/statuses/{user_id:[0-9]+}", ProjectsStatus)
     router.HandleFunc("/status/{id:[0-9]+}", ProjectStatus)
     

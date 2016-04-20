@@ -8,6 +8,7 @@ import (
     "path/filepath"
     "os/exec"
     "strings"
+    "time"
 )
 
 type command struct {
@@ -50,9 +51,12 @@ func (c *commands) Run() bool {
     
     // loop through commands & execute
     for _, cmd := range c.commands {
-        log.Println("$ ", cmd.name, strings.Join(cmd.args, " "))
+        log.Println("$", cmd.name, strings.Join(cmd.args, " "))
+        start := time.Now()
         ouput, err := exec.Command(cmd.name, cmd.args...).CombinedOutput()
+        end := time.Now()
         log.Println(string(ouput))
+        log.Println("Completed in", end.Sub(start))
         if err != nil {
             return false
         }

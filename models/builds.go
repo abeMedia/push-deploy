@@ -29,6 +29,16 @@ type Build struct {
     Logs        logs `json:"logs"`
 }
 
+type BuildList []struct {
+    ID          int `bson:"_id" json:"id"`
+    ProjectID   int `json:"project_id"`
+    Status      int `json:"status"`
+    Start       time.Time `json:"start"`
+    Finish      time.Time `json:"finish"`
+    Author      string `json:"author"`
+    Message     string `json:"message"`
+}
+
 type logs map[string]string
 
 // map -> string
@@ -48,7 +58,7 @@ func (l *logs) UnmarshalDB(v interface{}) error {
     return nil
 }
 
-func (m *build) List() (d []Build, err error) {
+func (m *build) List() (d BuildList, err error) {
     err = t.Table(m.table).GetList(db.Cond{}, &d)
     return d, err
 }
