@@ -4,16 +4,16 @@ import (
     "os"
     "sync"
     "strconv"
+    "errors"
     "github.com/abemedia/push-deploy/models"
 )
 
-func deploy(p *models.Project, h map[string]string) bool {
+func deploy(p *models.Project, h map[string]string) (errs []error) {
     os.Chdir("compiled")
     var wg sync.WaitGroup
-    success := true
     for i, d := range p.Deploy {
         wg.Add(1)
-        go func(i int, d map[string]string) {
+        go func(i int, d map[string]string, errs []error) {
             defer wg.Done()
             d["log"] = "../logs/deploy-" + strconv.Itoa(i) +".log"
             /*
@@ -23,16 +23,16 @@ func deploy(p *models.Project, h map[string]string) bool {
                 default: fmt.Println("Error!")
             }
             */
-            var ok bool
+            var err error
             switch d["type"] {
-                case "git": ok = deployGit(d, h)
-                case "s3": ok = deployS3(d, h)
-                case "ftp": ok = deployFTP(d, h)
-                case "local": ok = deployLocal(d, h)
-                default: ok = false
+                case "git": err = deployGit(d, h)
+                case "s3": err = deployS3(d, h)
+                case "ftp": err = deployFTP(d, h)
+                case "local": err = deployLocal(d, h)
+                default: err = errors.New("Unknown deployment type.")
             }
-            if !ok {
-                success = false
+            if err != nil {
+                errs = append(errs, err)
             }
             /*
             // merge deploy logs into main deploy log file
@@ -41,9 +41,9 @@ func deploy(p *models.Project, h map[string]string) bool {
             logfile.Write(log)
             os.Remove(d["log"])
             */
-        }(i, d)
+        }(i, d, errs)
     }
     wg.Wait()
     
-    return success
+    return errs
 }

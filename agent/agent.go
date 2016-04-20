@@ -4,6 +4,7 @@ import (
     "os"
     "io/ioutil"
     "fmt"
+    "strings"
     "log"
     "time"
     "github.com/abemedia/push-deploy/models"
@@ -56,7 +57,7 @@ func Run(h map[string]string, p models.Project) {
     os.Chdir(dir)
     logdir := dir + "/logs"
     
-    if !build(&p) {
+    if err := build(&p); err != nil {
         models.Builds.Update(id, map[string]interface{}{"status": StatusError})
         logger.Print(StatusText(StatusError))
         return
@@ -66,7 +67,7 @@ func Run(h map[string]string, p models.Project) {
     models.Builds.Update(id, map[string]interface{}{"status": StatusDeploy})
     logger.Print(StatusText(StatusDeploy))
     
-    if !deploy(&p, h) {
+    if err := deploy(&p, h); err != nil {
         models.Builds.Update(id, map[string]interface{}{"status": StatusError})
         logger.Print(StatusText(StatusError))
         return
@@ -77,11 +78,11 @@ func Run(h map[string]string, p models.Project) {
     files, _ := ioutil.ReadDir(logdir)
     for _, f := range files {
         log, _ := ioutil.ReadFile(logdir + "/" + f.Name())
-        logs[f.Name()] = string(log)
+        logs[strings.Split(f.Name(), ".")[0]] = string(log)
     }
     //.Builds.Update(id, build_info)
     models.Builds.Update(id, map[string]interface{}{
-        "status": StatusError,
+        "status": StatusOK,
         "finish": time.Now(),
         "logs": logs,
     })

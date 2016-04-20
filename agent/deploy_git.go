@@ -6,7 +6,7 @@ import (
     "github.com/abemedia/push-deploy/lib/cmd"
 )
 
-func deployGit(deploy map[string]string, hook map[string]string) bool {
+func deployGit(deploy map[string]string, hook map[string]string) error {
     command := cmd.New(deploy["log"])
     
     // initiate git repo if it isn't already done
@@ -14,7 +14,7 @@ func deployGit(deploy map[string]string, hook map[string]string) bool {
         command.Add("git", "init")
         command.Add("git", "remote", "add", "origin", deploy["repo"])
         
-        // todo: offer option to keep intact history
+        // todo: offer option to keep intact history, e.g. performing a git fetch & merge
     }
     
     // add all files, commit & push 

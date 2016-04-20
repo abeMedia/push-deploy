@@ -1,7 +1,6 @@
 package cmd
 
 import (
-    "fmt"
     "os"
     "log"
     "path"
@@ -33,7 +32,7 @@ func (c *commands) Add(name string, args...string) {
 }
 
 // run queued shell commands
-func (c *commands) Run() bool {
+func (c *commands) Run() error {
     // create project directory if it doesn't exist
     logdir := path.Dir(c.logfile)
     if _, err := os.Stat(logdir); os.IsNotExist(err) {
@@ -43,8 +42,7 @@ func (c *commands) Run() bool {
     // open logfile (create if necessary)
     f, err := os.OpenFile(c.logfile, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
     if err != nil {
-        fmt.Println(err)
-        return false
+        return err
     }
     defer f.Close()
     log.SetOutput(f)
@@ -55,15 +53,15 @@ func (c *commands) Run() bool {
         start := time.Now()
         ouput, err := exec.Command(cmd.name, cmd.args...).CombinedOutput()
         end := time.Now()
-        log.Println(string(ouput))
-        log.Println("Completed in", end.Sub(start))
+        log.Print(string(ouput))
+        log.Println("Completed in", end.Sub(start).String(), "\n")
         if err != nil {
-            return false
+            return err
         }
     }
     
     // clear command queue
     c.commands = nil
     
-    return true
+    return nil
 }

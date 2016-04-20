@@ -7,10 +7,12 @@ import (
     "io/ioutil"
 )
 
-func buildJekyll() bool {
+func buildJekyll() error {
     
     // update config file
-    jekyllConfig()
+    if err := jekyllConfig(); err != nil {
+        return err
+    }
     
     command := cmd.New("../logs/build.log")
     
@@ -21,11 +23,11 @@ func buildJekyll() bool {
     } else {
         command.Add("jekyll", "build", "--destination", "../compiled")
     }
-    if !command.Run() {
-        return false
+    if err := command.Run(); err != nil {
+        return err
     }
     
-    return true
+    return nil
 }
 
 func jekyllConfig() error {
@@ -44,9 +46,9 @@ func jekyllConfig() error {
     
     // add default exclude params
     if _, ok := c["exclude"]; !ok {
-        c["exclude"] = []string{}
+        c["exclude"] = []interface {}{}
     }
-    c["exclude"] = append(c["exclude"].([]string), []string{"Gemfile","Gemfile.lock","bower.json"}...)
+    c["exclude"] = append(c["exclude"].([]interface {}), []interface {}{"Gemfile","Gemfile.lock","bower.json"}...)
     
     // encode back to yaml
     d, err := yaml.Marshal(&c)

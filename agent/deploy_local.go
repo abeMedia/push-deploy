@@ -7,11 +7,10 @@ import (
 	"log"
 )
 
-func deployLocal(deploy map[string]string, hook map[string]string) bool {
+func deployLocal(deploy map[string]string, hook map[string]string) error {
     f, err := os.OpenFile(deploy["log"], os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
     if err != nil {
-        fmt.Println(err)
-        return false
+        return err
     }
     defer f.Close()
     log.SetOutput(f)
@@ -21,11 +20,11 @@ func deployLocal(deploy map[string]string, hook map[string]string) bool {
     err = copyAll(".", deploy["path"])
     if err != nil {
         log.Println(err)
-        return false
+        return err
     }
     
     log.Println("Finished copying files.")
-    return true
+    return nil
 }
 
 func copyAll(source string, dest string) (err error) {
