@@ -10,7 +10,7 @@ import (
 )
 
 func getProjectAuthorised(w http.ResponseWriter, r *http.Request) (models.Project, bool) {
-    project, err := models.Projects.Get(mux.Vars(r)["id"])
+    project, err := models.Projects.Get(mux.Vars(r)["project_id"])
     s, err := session.Get(r)
     if err == nil {
         u := s.Values["user"].(models.User)
@@ -70,7 +70,7 @@ func ProjectUpdate(w http.ResponseWriter, r *http.Request) {
         return
     }
     
-    id := mux.Vars(r)["id"]
+    id := mux.Vars(r)["project_id"]
     err = models.Projects.Update(id, data)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -90,7 +90,7 @@ func ProjectDelete(w http.ResponseWriter, r *http.Request) {
         return
     }
     
-    err := models.Projects.Delete(mux.Vars(r)["id"])
+    err := models.Projects.Delete(mux.Vars(r)["project_id"])
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
@@ -98,7 +98,7 @@ func ProjectDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func ProjectBuild(w http.ResponseWriter, r *http.Request) {
-    d, err := models.Projects.Get(mux.Vars(r)["id"])
+    d, err := models.Projects.Get(mux.Vars(r)["project_id"])
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return

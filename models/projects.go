@@ -30,6 +30,7 @@ type Project struct {
     Branch  string `json:"branch"`
     Deploy  deploy `json:"deploy"`
     Status  int `db:"-" json:"status"`
+    Current Build `db:"-" json:"current"`
 }
 
 type deploy []map[string]string
@@ -63,9 +64,9 @@ func (m *projects) List() (d []Project, err error) {
         if err != nil {
             continue
         }
-        d[i].Status = last_build.Status
+        d[i].Current = last_build
     }
-    return d, err
+    return d, nil
 }
 
 func (m *projects) Get(q interface{}) (d Project, err error) {
@@ -77,8 +78,8 @@ func (m *projects) Get(q interface{}) (d Project, err error) {
     if err != nil && err.Error() != "There are no more rows in this result set." {
         return d, err
     }
-    d.Status = last_build.Status
-    return d, err
+    d.Current = last_build
+    return d, nil
 }
 
 func (m *projects) UserList(user_id int) (d []Project, err error) {
@@ -93,7 +94,7 @@ func (m *projects) UserList(user_id int) (d []Project, err error) {
         if err != nil {
             continue
         }
-        d[i].Status = last_build.Status
+        d[i].Current = last_build
     }
     return d, err
 }

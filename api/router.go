@@ -22,19 +22,16 @@ func init() {
     
     // projects
     router.HandleFunc("/projects", auth(Projects)).Methods("GET")
-    router.HandleFunc("/projects/{id:[0-9]+}", auth(ProjectView)).Methods("GET")
-    router.HandleFunc("/projects/{id:[0-9]+}", auth(ProjectUpdate)).Methods("PUT")
     router.HandleFunc("/projects", auth(ProjectAdd)).Methods("POST")
-    router.HandleFunc("/projects/{id:[0-9]+}", auth(ProjectDelete)).Methods("DELETE")
-    router.HandleFunc("/projects/{id:[0-9]+}/build", auth(ProjectBuild)).Methods("POST")
+    router.HandleFunc("/projects/{project_id:[0-9]+}", auth(ProjectView)).Methods("GET")
+    router.HandleFunc("/projects/{project_id:[0-9]+}", auth(ProjectUpdate)).Methods("PUT")
+    router.HandleFunc("/projects/{project_id:[0-9]+}", auth(ProjectDelete)).Methods("DELETE")
     
-    /*
     // project builds
-    router.HandleFunc("/projects/{id:[0-9]+}/builds", auth(Builds)).Methods("GET")
-    router.HandleFunc("/projects/{id:[0-9]+}/builds/{id:[0-9]+}", auth(BuildView)).Methods("GET")
-    router.HandleFunc("/projects/{id:[0-9]+}/builds", auth(BuildNew)).Methods("POST")
-    router.HandleFunc("/projects/{id:[0-9]+}/builds/{id:[0-9]+}", auth(BuildDelete)).Methods("DELETE")
-    */
+    router.HandleFunc("/projects/{project_id:[0-9]+}/builds", auth(Builds)).Methods("GET")
+    router.HandleFunc("/projects/{project_id:[0-9]+}/builds", auth(BuildNew)).Methods("POST")
+    router.HandleFunc("/projects/{project_id:[0-9]+}/builds/{build_id:[0-9]+}", auth(BuildView)).Methods("GET")
+    router.HandleFunc("/projects/{project_id:[0-9]+}/builds/{build_id:[0-9]+}", auth(BuildDelete)).Methods("DELETE")
     
     // status websockets
     router.HandleFunc("/statuses/{user_id:[0-9]+}", ProjectsStatus)

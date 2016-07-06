@@ -31,10 +31,10 @@ angular.module('app')
   };
 
   return service;
-});
+})
 
 // http interceptor to sign out if 401 is returned
-angular.module("app").config(function ($provide, $httpProvider) {
+.config(function ($provide, $httpProvider) {
   $provide.factory('httpInterceptor', function ($q, $window) {
     return {
       response: function (response) {
@@ -51,7 +51,7 @@ angular.module("app").config(function ($provide, $httpProvider) {
   $httpProvider.interceptors.push('httpInterceptor');
 });
 
-// Base64 encoding service used by AuthenticationService
+// Base64 encoding used by AuthenticationService
 var Base64 = {
 
   keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',

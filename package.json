@@ -1,0 +1,26 @@
+{
+  "name": "push-deploy",
+  "version": "0.1.0",
+  "description": "Deploy static sites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abemedia/push-deploy.git"
+  },
+  "keywords": [
+    "jekyll",
+    "deploy",
+    "git",
+    "s3",
+    "ftp"
+  ],
+  "author": "Adam Bouqdib",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/abemedia/push-deploy/issues"
+  },
+  "homepage": "https://github.com/abemedia/push-deploy#readme"
+}

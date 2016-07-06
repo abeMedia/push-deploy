@@ -58,8 +58,8 @@ func (l *logs) UnmarshalDB(v interface{}) error {
     return nil
 }
 
-func (m *build) List() (d BuildList, err error) {
-    err = t.Table(m.table).GetList(db.Cond{}, &d)
+func (m *build) List(id interface{}) (d BuildList, err error) {
+    err = t.Table(m.table).GetList(db.Cond{"project_id":id}, &d)
     return d, err
 }
 
